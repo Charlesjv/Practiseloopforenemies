@@ -46,7 +46,7 @@ public class GameEngine extends SurfaceView implements Runnable {
     // ## SPRITES
     // ----------------------------
     Player player;
-    boolean fingerMoved;
+    boolean shoot = false;
 
 
 
@@ -154,9 +154,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
         numloops = numloops + 1;
 
-        if(numloops % 50 == 0){
-            this.player.spawnBullets();
-        }
+
 
         int BULLET_SPEED = 10;
 
@@ -166,7 +164,12 @@ public class GameEngine extends SurfaceView implements Runnable {
             bullet.bottom = bullet.bottom - BULLET_SPEED;
         }
 
+        if(shoot == true){
 
+            if(numloops % 5 == 0){
+                this.player.spawnBullets();
+            }
+        }
 
 
         // @TODO: Update position of enemy ships
@@ -247,7 +250,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
         if(userAction == MotionEvent.ACTION_DOWN){
-            fingerMoved = true;
+            shoot = true;
         }
         //@TODO: What should happen when person touches the screen?
         if (userAction == MotionEvent.ACTION_MOVE) {
@@ -259,7 +262,7 @@ public class GameEngine extends SurfaceView implements Runnable {
         }
         else if (userAction == MotionEvent.ACTION_UP) {
             // move player down
-
+            shoot = false;
         }
 
         return true;
