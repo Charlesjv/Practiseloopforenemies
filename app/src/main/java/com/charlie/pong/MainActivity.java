@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     
 
-
+    int ballXPosition;
+    int ballYPosition;
 
 
     GameEngine pongGame;
@@ -144,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         public void updatePositions(){
+
+            this.ballXPosition = this.ballXPosition  + 10;
+
+
 
         }
         public void drawPositions(){
