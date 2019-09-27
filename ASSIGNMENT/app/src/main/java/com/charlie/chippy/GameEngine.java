@@ -104,7 +104,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
     private  void spawnEnemies(){
 
-
+        this.enemy = new Enemy(this.getContext(),370,this.screenHeight/2-400);
     }
 
     // ------------------------------
@@ -158,13 +158,15 @@ public class GameEngine extends SurfaceView implements Runnable {
 
         int BULLET_SPEED = 10;
 
+
+
         for(int i = 0; i < this.player.getBullets().size(); i++){
             Rect bullet = this.player.getBullets().get(i);
             bullet.top = bullet.top - BULLET_SPEED;
             bullet.bottom = bullet.bottom - BULLET_SPEED;
         }
 
-        if(shoot == true){
+        if(shoot){
 
             if(numloops % 5 == 0){
                 this.player.spawnBullets();
@@ -209,12 +211,12 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
             this.canvas.drawBitmap(this.player.getBitmap(),this.player.getXPosition(),this.player.getYPosition(),paintbrush);
-
             Rect playersHitBox = this.player.getHitbox();
             this.canvas.drawRect(playersHitBox.left,playersHitBox.top,playersHitBox.right,playersHitBox.bottom,paintbrush);
 
-
-
+            Rect enemyHitbox = this.enemy.getHitbox();
+            this.canvas.drawRect(enemyHitbox.left,enemyHitbox.top,enemyHitbox.right,enemyHitbox.bottom,paintbrush);
+            this.canvas.drawBitmap(this.enemy.getBitmap(),this.enemy.getXPosition(),this.enemy.getYPosition(),paintbrush);
 
             //Draw bullets on the screen
 

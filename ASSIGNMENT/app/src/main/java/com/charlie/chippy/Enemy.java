@@ -14,7 +14,7 @@ public class Enemy {
     private Rect hitBox;
 
     public Enemy(Context context, int x, int y) {
-       // this.image = BitmapFactory.decodeResource(context.getResources(), R.drawable.alien_ship2);
+        this.image = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_leafbeetle);
         this.xPosition = x;
         this.yPosition = y;
 
