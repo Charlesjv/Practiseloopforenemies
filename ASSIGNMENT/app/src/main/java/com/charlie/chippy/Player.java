@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
+import java.util.ArrayList;
+
 public class Player {
     int xPosition;
     int yPosition;
@@ -12,6 +14,14 @@ public class Player {
     Bitmap playerImage;
 
     private Rect hitBox;
+
+
+    private final int BULLET_WIDTH = 15;
+
+
+    private ArrayList<Rect> bullets = new ArrayList<Rect>();
+
+
 
     public Player(Context context, int x, int y) {
         this.playerImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_ship);
@@ -71,6 +81,32 @@ public class Player {
     }
     public Bitmap getBitmap() {
         return this.playerImage;
+    }
+    public ArrayList<Rect> getBullets() {
+        return bullets;
+    }
+
+    public void setBullets(ArrayList<Rect> bullets) {
+        this.bullets = bullets;
+    }
+
+    public int getBulletWidth() {
+        return BULLET_WIDTH;
+    }
+
+
+
+
+
+    public void spawnBullets(){
+
+            Rect bullet = new Rect(this.xPosition + playerImage.getWidth()/2 ,
+                    this.yPosition - playerImage.getHeight()/2 + BULLET_WIDTH ,
+                this.xPosition + playerImage.getWidth()/2 + BULLET_WIDTH,
+                this.yPosition - playerImage.getHeight()/2
+        );
+
+        this.bullets.add(bullet);
     }
 
 }

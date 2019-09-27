@@ -2,6 +2,7 @@ package com.charlie.chippy;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -34,8 +35,7 @@ public class GameEngine extends SurfaceView implements Runnable {
     Canvas canvas;
     Paint paintbrush;
 
-    Bitmap background;
-    int bgXPosition;
+
 
 
     // -----------------------------------
@@ -46,6 +46,11 @@ public class GameEngine extends SurfaceView implements Runnable {
     // ## SPRITES
     // ----------------------------
     Player player;
+    boolean fingerMoved;
+
+
+
+
     Enemy enemy;
 
     // ----------------------------
@@ -53,6 +58,11 @@ public class GameEngine extends SurfaceView implements Runnable {
     // ----------------------------
     int score = 0;
     int lives = 5;
+
+
+
+    int fingerXPosition;
+    int fingerYPosition;
 
     public GameEngine(Context context, int w, int h) {
         super(context);
@@ -71,6 +81,10 @@ public class GameEngine extends SurfaceView implements Runnable {
 
         this.spawnPlayer();
         this.spawnEnemies();
+
+
+
+
 
         // @TODO: Any other game setup
 
@@ -127,8 +141,33 @@ public class GameEngine extends SurfaceView implements Runnable {
     // - update, draw, setFPS
     // ------------------------------
 
+
+    int numloops = 0;
+
     public void updatePositions() {
+
+
+        // Update position of background
+
+
         // @TODO: Update position of player
+
+        numloops = numloops + 1;
+
+        if(numloops % 50 == 0){
+            this.player.spawnBullets();
+        }
+
+        int BULLET_SPEED = 10;
+
+        for(int i = 0; i < this.player.getBullets().size(); i++){
+            Rect bullet = this.player.getBullets().get(i);
+            bullet.top = bullet.top - BULLET_SPEED;
+            bullet.bottom = bullet.bottom - BULLET_SPEED;
+        }
+
+
+
 
         // @TODO: Update position of enemy ships
 
@@ -143,6 +182,11 @@ public class GameEngine extends SurfaceView implements Runnable {
     public void redrawSprites() {
         if (this.holder.getSurface().isValid()) {
             this.canvas = this.holder.lockCanvas();
+
+
+            // DRAW THE BACKGROUND
+
+
 
 
             this.canvas.drawColor(Color.BLACK);
@@ -162,11 +206,20 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
             this.canvas.drawBitmap(this.player.getBitmap(),this.player.getXPosition(),this.player.getYPosition(),paintbrush);
+
             Rect playersHitBox = this.player.getHitbox();
             this.canvas.drawRect(playersHitBox.left,playersHitBox.top,playersHitBox.right,playersHitBox.bottom,paintbrush);
 
 
 
+
+            //Draw bullets on the screen
+
+            for(int i = 0; i < this.player.getBullets().size(); i++ ){
+                Rect bullet = this.player.getBullets().get(i);
+                canvas.drawRect(bullet,paintbrush);
+
+            }
 
             this.holder.unlockCanvasAndPost(canvas);
         }
@@ -189,12 +242,18 @@ public class GameEngine extends SurfaceView implements Runnable {
     public boolean onTouchEvent(MotionEvent event) {
         int userAction = event.getActionMasked();
 
-        float fingerXPosition = event.getX();
-        float fingerYPosition = event.getY();
+        int fingerXPosition = (int)event.getX();
+        int fingerYPosition = (int)event.getY();
 
+
+        if(userAction == MotionEvent.ACTION_DOWN){
+            fingerMoved = true;
+        }
         //@TODO: What should happen when person touches the screen?
         if (userAction == MotionEvent.ACTION_MOVE) {
-
+            this.player.xPosition = fingerXPosition;
+            this.player.yPosition = fingerYPosition;
+            player.updateHitbox();
 
 
         }
