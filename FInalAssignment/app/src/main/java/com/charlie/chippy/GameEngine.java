@@ -49,13 +49,13 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
 
-
+    Bullets bullet;
     Enemy enemy;
     EnemyGang enemyGang;
     EnemyGang enemyGang1;
     EnemyGang enemyGang2;
     List<EnemyGang> enemyGangList = new ArrayList<EnemyGang>();
-
+    List<Bullets> bulletsList = new ArrayList<Bullets>();
 
     // ----------------------------
     // ## GAME STATS
@@ -124,6 +124,13 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
     }
+
+    private  void spawnBullets(){
+
+        this.bullet = new Bullets(getContext(),this.enemy1.getHitbox().left,this.enemy1.getImage().getHeight()/2);
+
+        this.bulletsList.add(bullet);
+    }
     // ------------------------------
     // GAME STATE FUNCTIONS (run, stop, start)
     // ------------------------------
@@ -173,7 +180,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
 
-        int BULLET_SPEED = 10;
+        int BULLET_SPEED = 150;
 
 
 
