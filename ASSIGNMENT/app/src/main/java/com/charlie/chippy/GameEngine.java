@@ -12,6 +12,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.ColorRes;
 
 public class GameEngine extends SurfaceView implements Runnable {
@@ -52,6 +55,11 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
     Enemy enemy;
+    EnemyGang enemyGang;
+    EnemyGang enemyGang1;
+    EnemyGang enemyGang2;
+    List<EnemyGang> enemyGangList = new ArrayList<EnemyGang>();
+
 
     // ----------------------------
     // ## GAME STATS
@@ -81,7 +89,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
         this.spawnPlayer();
         this.spawnEnemies();
-
+        this.spawnEnemyGang();
 
 
 
@@ -105,8 +113,21 @@ public class GameEngine extends SurfaceView implements Runnable {
     private  void spawnEnemies(){
 
         this.enemy = new Enemy(this.getContext(),370,this.screenHeight/2-400);
+
     }
 
+    private void spawnEnemyGang(){
+
+
+        this.enemyGang = new EnemyGang(this.getContext(),enemy.getHitbox().right,this.screenHeight/2-400);
+        this.enemyGangList.add(new EnemyGang(this.getContext(),enemy.getHitbox().right ,this.screenHeight/2-315));
+
+        this.enemyGangList.add( new EnemyGang(this.getContext(),enemy.getHitbox().right ,this.screenHeight/2-235));
+
+        this.enemyGangList.add(enemyGang);
+
+
+    }
     // ------------------------------
     // GAME STATE FUNCTIONS (run, stop, start)
     // ------------------------------
@@ -177,6 +198,8 @@ public class GameEngine extends SurfaceView implements Runnable {
         // @TODO: Update position of enemy ships
 
 
+
+
         // @TODO: Collision detection between enemy and wall
 
 
@@ -217,6 +240,33 @@ public class GameEngine extends SurfaceView implements Runnable {
             Rect enemyHitbox = this.enemy.getHitbox();
             this.canvas.drawRect(enemyHitbox.left,enemyHitbox.top,enemyHitbox.right,enemyHitbox.bottom,paintbrush);
             this.canvas.drawBitmap(this.enemy.getBitmap(),this.enemy.getXPosition(),this.enemy.getYPosition(),paintbrush);
+
+
+//            Rect  enemyGangHitbox = this.enemyGang.getHitbox();
+//            this.canvas.drawRect(enemyGangHitbox.left,enemyGangHitbox.top,enemyGangHitbox.right,enemyGangHitbox.bottom,paintbrush);
+
+            for(int i=0; i<enemyGangList.size();i++) {
+
+                Rect enemyGangHitbox = this.enemyGang.getHitbox();
+
+                int x = enemyGangList.get(i).xPosition;
+                int y = enemyGangList.get(i).yPosition;
+                canvas.drawRect(enemyGangList.get(i).getHitbox().left,enemyGangList.get(i).getHitbox().top,enemyGangList.get(i).getHitbox().right,enemyGangList.get(i).getHitbox().bottom,paintbrush);
+
+            }
+            // enemyGangList
+
+            for(int i = 0; i < enemyGangList.size(); i++){
+
+                int x = enemyGangList.get(i).xPosition;
+               int y = enemyGangList.get(i).yPosition;
+
+                canvas.drawBitmap(this.enemyGang.getBitmap(),x,y,paintbrush);
+
+            }
+
+
+
 
             //Draw bullets on the screen
 

@@ -5,13 +5,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
+import java.util.ArrayList;
+
 public class Enemy {
     int xPosition;
     int yPosition;
     int direction;
     Bitmap image;
 
+
     private Rect hitBox;
+
+
+
 
     public Enemy(Context context, int x, int y) {
         this.image = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_leafbeetle);
@@ -64,4 +70,7 @@ public class Enemy {
     public Bitmap getBitmap() {
         return this.image;
     }
+
+
+
 }
