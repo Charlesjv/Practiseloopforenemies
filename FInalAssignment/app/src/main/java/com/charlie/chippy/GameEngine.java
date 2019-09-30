@@ -1,8 +1,6 @@
 package com.charlie.chippy;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,11 +13,9 @@ import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.ColorRes;
-
 public class GameEngine extends SurfaceView implements Runnable {
 
-    // Android debug variables
+
     final static String TAG="TAPPY-SPACESHIP";
 
     // screen size
@@ -259,7 +255,7 @@ public class GameEngine extends SurfaceView implements Runnable {
             for(int i = 0; i < enemyGangList.size(); i++){
 
                 int x = enemyGangList.get(i).xPosition;
-               int y = enemyGangList.get(i).yPosition;
+                int y = enemyGangList.get(i).yPosition;
 
                 canvas.drawBitmap(this.enemyGang.getBitmap(),x,y,paintbrush);
 
@@ -320,3 +316,5 @@ public class GameEngine extends SurfaceView implements Runnable {
         return true;
     }
 }
+
+

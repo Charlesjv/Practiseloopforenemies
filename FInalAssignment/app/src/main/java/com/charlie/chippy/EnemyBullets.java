@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
 public class EnemyBullets {
+
     int xPosition;
     int yPosition;
     int direction;
@@ -68,6 +69,7 @@ public class EnemyBullets {
     public Bitmap getBitmap() {
         return this.image;
     }
+
 
 
 

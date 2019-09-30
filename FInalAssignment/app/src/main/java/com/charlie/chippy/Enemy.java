@@ -5,42 +5,38 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
-import java.util.ArrayList;
-
-public class EnemyGang {
+public class Enemy {
 
 
     int xPosition;
     int yPosition;
     int direction;
     Bitmap image;
-    Enemy enemy;
+
 
     private Rect hitBox;
-    private int ENEMY_WIDTH = 15;
-
-    ArrayList<Rect> enemies = new ArrayList<Rect>();
 
 
 
-    public EnemyGang(Context context, int x, int y) {
-        this.image = BitmapFactory.decodeResource(context.getResources(), R.drawable.images);
+
+    public Enemy(Context context, int x, int y) {
+        this.image = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_leafbeetle);
         this.xPosition = x;
         this.yPosition = y;
 
         this.hitBox = new Rect(this.xPosition, this.yPosition, this.xPosition + this.image.getWidth(), this.yPosition + this.image.getHeight());
     }
 
-    public void updateEnemyGangPosition() {
+    public void updateEnemyPosition() {
         this.xPosition = this.xPosition - 15;
 
         // update the position of the hitbox
         this.hitBox.left = this.xPosition;
         this.hitBox.right = this.xPosition + this.image.getWidth();
-        this.updateEnemyGangHitbox();
+        this.updateHitbox();
     }
 
-    public void updateEnemyGangHitbox() {
+    public void updateHitbox() {
         // update the position of the hitbox
         this.hitBox.top = this.yPosition;
         this.hitBox.left = this.xPosition;
@@ -55,12 +51,12 @@ public class EnemyGang {
 
     public void setXPosition(int x) {
         this.xPosition = x;
-        this.updateEnemyGangHitbox();
+        this.updateHitbox();
     }
 
     public void setYPosition(int y) {
         this.yPosition = y;
-        this.updateEnemyGangHitbox();
+        this.updateHitbox();
     }
 
     public int getXPosition() {
@@ -76,15 +72,5 @@ public class EnemyGang {
     }
 
 
-    public void spawnEnemyGang(){
-
-        Rect enemyGang = new Rect(this.xPosition
-                , this.yPosition,this.xPosition+this.image.getWidth()
-                 , this.yPosition );
-
-        this.enemies.add(enemyGang);
-
-    }
 
 }
-

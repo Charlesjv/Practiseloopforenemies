@@ -8,6 +8,8 @@ import android.graphics.Rect;
 import java.util.ArrayList;
 
 public class Player {
+
+
     int xPosition;
     int yPosition;
     int direction = -1;              // -1 = not moving, 0 = down, 1 = up
@@ -100,14 +102,12 @@ public class Player {
 
     public void spawnBullets(){
 
-            Rect bullet = new Rect(this.xPosition + playerImage.getWidth()/2 ,
-                    this.yPosition - playerImage.getHeight()/2 + BULLET_WIDTH ,
+        Rect bullet = new Rect(this.xPosition + playerImage.getWidth()/2 ,
+                this.yPosition - playerImage.getHeight()/2 + BULLET_WIDTH ,
                 this.xPosition + playerImage.getWidth()/2 + BULLET_WIDTH,
                 this.yPosition - playerImage.getHeight()/2
         );
 
         this.bullets.add(bullet);
     }
-
 }
-
