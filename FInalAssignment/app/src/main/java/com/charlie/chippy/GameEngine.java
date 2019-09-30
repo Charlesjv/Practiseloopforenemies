@@ -87,7 +87,7 @@ public class GameEngine extends SurfaceView implements Runnable {
         this.spawnEnemies();
         this.spawnEnemyGang();
 
-
+        this.spawnBullets();
 
 
         // @TODO: Any other game setup
@@ -127,7 +127,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
     private  void spawnBullets(){
 
-        this.bullet = new Bullets(getContext(),this.enemy1.getHitbox().left,this.enemy1.getImage().getHeight()/2);
+        this.bullet = new Bullets(getContext(),this.player.getHitbox().left ,this.player.getHitbox().top);
 
         this.bulletsList.add(bullet);
     }
@@ -184,16 +184,17 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
 
-        for(int i = 0; i < this.player.getBullets().size(); i++){
-            Rect bullet = this.player.getBullets().get(i);
-            bullet.top = bullet.top - BULLET_SPEED;
-            bullet.bottom = bullet.bottom - BULLET_SPEED;
+        for(int i = 0; i < this.bulletsList.size(); i++){
+             bullet = this.bulletsList.get(i);
+            bullet.yPosition = bullet.yPosition - BULLET_SPEED;
+            bullet.updateHitbox();
+
         }
 
         if(shoot){
 
-            if(numloops % 5 == 0){
-                this.player.spawnBullets();
+            if(numloops % 2 == 0){
+                spawnBullets();
             }
         }
 
@@ -273,9 +274,11 @@ public class GameEngine extends SurfaceView implements Runnable {
 
             //Draw bullets on the screen
 
-            for(int i = 0; i < this.player.getBullets().size(); i++ ){
-                Rect bullet = this.player.getBullets().get(i);
-                canvas.drawRect(bullet,paintbrush);
+            for(int i = 0; i < this.bulletsList.size(); i++ ){
+                bullet = this.bulletsList.get(i);
+
+                canvas.drawRect(bulletsList.get(i).getHitbox().left,bulletsList.get(i).getHitbox().top,bulletsList.get(i).getHitbox().right,bulletsList.get(i).getHitbox().bottom,paintbrush);
+                canvas.drawBitmap(bullet.getImage(),this.bullet.xPosition,this.bullet.yPosition,paintbrush);
 
             }
 
